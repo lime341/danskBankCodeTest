@@ -1,0 +1,124 @@
+openapi: "3.0.0"
+info:
+  title: "Account Management API"
+  version: 1.0.0
+  description: "API controlling accounts"
+tags:
+  - name: AccountManagementApi
+paths:
+  /account/create:
+    post:
+      summary: Create new Account
+      operationId: createAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountInput"
+      responses:
+        200:
+          description: "Create new account"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /account/{accountId}/deposit:
+    post:
+      summary: Deposit money to Account
+      operationId: depositMoney
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: number
+      responses:
+        200:
+          description: "Deposit money to account"
+          content:
+            text/plain:
+              schema:
+                type: number
+  /account/{accountId}/withdraw:
+    post:
+      summary: Withdraw money from Account
+      operationId: withdrawMoney
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: number
+      responses:
+        200:
+          description: "Withdraw money from account"
+          content:
+            text/plain:
+              schema:
+                type: number
+  /account/{accountId}/balance:
+    get:
+      summary: Get balance from Account
+      operationId: getBalance
+      parameters:
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "Deposit money to account"
+          content:
+            text/plain:
+              schema:
+                type: number
+  /account/{accountId}/transactions:
+    get:
+      summary: Get the most recent transactions
+      operationId: getTransaction
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: accountId
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "Get most recent transactions"
+          content:
+            text/plain:
+              schema:
+                type: number
+components:
+  schemas:
+    AccountDTO:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+    AccountInput:
+      type: object
+      properties:
+        customerId:
+          type: string
+        name:
+          type: string
+
+
